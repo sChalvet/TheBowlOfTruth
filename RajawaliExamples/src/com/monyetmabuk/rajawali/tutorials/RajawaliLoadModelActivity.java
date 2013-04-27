@@ -106,7 +106,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
     /************
 	 * TOUCH FUNCTION - Should allow user to rotate the environment
 	 **********/
-	@Override public boolean onTouchEvent(MotionEvent e) {
+	/*@Override public boolean onTouchEvent(MotionEvent e) {
 		float x = e.getX();
 		float y = e.getY();
 		switch (e.getAction()) {
@@ -137,7 +137,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 		mPreviousX = x;
 		mPreviousY = y;
 		return true;
-	}
+	}*/
     
     public void onClick(View v) {
     	Toast.makeText(getApplicationContext(), "button", Toast.LENGTH_LONG).show();
