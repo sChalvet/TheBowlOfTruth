@@ -153,7 +153,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	 * PROPERTIES
 	 *********************************/
 
-	private GLSurfaceView mGLSurfaceView;
+	/*private GLSurfaceView mGLSurfaceView;
 
 	// rotation
 	private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
@@ -180,7 +180,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	float oldDist = 100.0f;
 	float newDist;
 
-	int mode = 0;
+	int mode = 0;*/
     
     
     

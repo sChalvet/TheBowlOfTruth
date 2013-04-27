@@ -58,7 +58,7 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		mCamera.setLookAt(0, 0, 0);
 		mCamera.setZ(-30);
 
-		ObjParser objParser = new ObjParser(mContext.getResources(), mTextureManager, R.raw.fire_truck_obj);
+		ObjParser objParser = new ObjParser(mContext.getResources(), mTextureManager, R.raw.multiobjects_obj);
 		objParser.parse();
 		mObjectGroup = objParser.getParsedObject();
 		mObjectGroup.addLight(mLight);
