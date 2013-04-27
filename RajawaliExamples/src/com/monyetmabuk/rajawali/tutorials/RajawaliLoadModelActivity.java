@@ -90,82 +90,38 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
     }
     
     public boolean onTouch(View v, MotionEvent event) {
-		float x = event.getX();
-		float y = event.getY();
 		
     	int randomIndex = generator.nextInt( fortuneCookie.length );
     	
-		/*if(event.getAction() == MotionEvent.ACTION_DOWN)
+		if(event.getAction() == MotionEvent.ACTION_DOWN)
 		{
+			Log.d("ShaderActivity", "mode=DRAG" );
 			mp.start();
 			Toast.makeText(getApplicationContext(), fortuneCookie[randomIndex], Toast.LENGTH_LONG).show();
 			
-			mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));
-		}*/
-		
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_DOWN:			// one touch: drag
-			Log.d("ShaderActivity", "mode=DRAG" );
-			mode = DRAG;
-			mp.start();
-			mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));
-			Toast.makeText(getApplicationContext(), fortuneCookie[randomIndex], Toast.LENGTH_LONG).show();
-			break;
-		case MotionEvent.ACTION_UP:		// no mode
-			mode = NONE;
-			Log.d("ShaderActivity", "mode=NONE" );
-			oldDist = 100.0f;
-			break;
-		case MotionEvent.ACTION_POINTER_UP:		// no mode
-			mode = NONE;
-			Log.d("ShaderActivity", "mode=NONE" );
-			oldDist = 100.0f;
-			break;
-		case MotionEvent.ACTION_MOVE:						// rotation
-			if (mode == DRAG){
-				Log.d("ShaderActivity", "Action move??" );
-				mRenderer.manualRotation(mPreviousX, x, mPreviousY, y);
-			}
-			break;
+			//mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));  //Waves!
 		}
-		mPreviousX = x;
-		mPreviousY = y;
-		
-		
 		return super.onTouchEvent(event);
 	}
     
 
-	/*@Override public boolean onTouchEvent(MotionEvent e) {
+	@Override public boolean onTouchEvent(MotionEvent e) {
 		float x = e.getX();
 		float y = e.getY();
 	
 		
 		switch (e.getAction()) {
-		case MotionEvent.ACTION_DOWN:			// one touch: drag
-			Log.d("ShaderActivity", "mode=DRAG" );
-			mode = DRAG;
-			break;
-		case MotionEvent.ACTION_UP:		// no mode
-			mode = NONE;
-			Log.d("ShaderActivity", "mode=NONE" );
-			oldDist = 100.0f;
-			break;
-		case MotionEvent.ACTION_POINTER_UP:		// no mode
-			mode = NONE;
-			Log.d("ShaderActivity", "mode=NONE" );
-			oldDist = 100.0f;
-			break;
+
 		case MotionEvent.ACTION_MOVE:						// rotation
-			if (mode == DRAG){
-				mRenderer.manualRotation(mPreviousX, x, mPreviousY, y);
-			}
+			Log.d("ShaderActivity", "Action move2??" );
+			Log.d("ShaderActivity", "xP= "+mPreviousX+" xNow= "+ "+mPreviousX+"+" yP= "+mPreviousY+" Ynow=  "+y);
+			mRenderer.manualRotation(mPreviousX, x, mPreviousY, y);
 			break;
 		}
 		mPreviousX = x;
 		mPreviousY = y;
 		return true;
-	}*/
+	}
     
     public void onClick(View v) {
     	//Toast.makeText(getApplicationContext(), "button", Toast.LENGTH_LONG).show();
@@ -185,7 +141,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	// rotation
 	private float mPreviousX;
 	private float mPreviousY;
-
+	
 
 
 	// touch events

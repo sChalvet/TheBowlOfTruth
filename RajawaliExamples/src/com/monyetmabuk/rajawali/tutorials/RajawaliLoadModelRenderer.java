@@ -37,6 +37,7 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 	private TouchRippleFilter mFilter;
 	private long frameCount;
 	private final int QUAD_SEGMENTS = 40;
+	private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
 	
 	public RajawaliLoadModelRenderer(Context context) {
 		super(context);
@@ -107,7 +108,8 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 	
 	public void manualRotation(float xBegin, float xFinish, float yBegin, float yFinish){
 		//manualRotation = new RotateAnimation3D(Axis.X, xBegin, );
-		mObjectGroup.setRotation((xBegin-xFinish), (yBegin-yFinish), 0);
+		
+		mObjectGroup.setRotation(((xFinish-xBegin)* TOUCH_SCALE_FACTOR), ((yFinish-yBegin)* TOUCH_SCALE_FACTOR), 0);
 	}
 
 	public void onDrawFrame(GL10 glUnused) {
