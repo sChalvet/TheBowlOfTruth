@@ -29,8 +29,9 @@ import android.graphics.BitmapFactory;
 public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 	private PointLight mLight;
 	private BaseObject3D mObjectGroup;
-	private Animation3D mCameraAnim, mLightAnim;
+	private Animation3D mCameraAnim, mLightAnim, manualRotation;
 	private ObjectColorPicker mPicker;
+	public boolean rotate = true;
 	
 	//for ripple effect
 	private TouchRippleFilter mFilter;
@@ -58,7 +59,7 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		mCamera.setLookAt(0, 0, 0);
 		mCamera.setZ(-30);
 
-		ObjParser objParser = new ObjParser(mContext.getResources(), mTextureManager, R.raw.multiobjects_obj);
+		ObjParser objParser = new ObjParser(mContext.getResources(), mTextureManager, R.raw.fire_truck_obj);
 		objParser.parse();
 		mObjectGroup = objParser.getParsedObject();
 		mObjectGroup.addLight(mLight);
@@ -92,6 +93,21 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		((RajawaliExampleActivity) mContext).hideLoader();
 		mCameraAnim.start();
 		mLightAnim.start();		
+	}
+	
+	public void stopRotation(){
+		mCameraAnim.cancel();
+		mLightAnim.cancel();	
+	}
+	
+	public void startRotation(){
+		mCameraAnim.start();
+		mLightAnim.start();	
+	}
+	
+	public void manualRotation(float xBegin, float xFinish, float yBegin, float yFinish){
+		//manualRotation = new RotateAnimation3D(Axis.X, xBegin, );
+		mObjectGroup.setRotation((xBegin-xFinish), (yBegin-yFinish), 0);
 	}
 
 	public void onDrawFrame(GL10 glUnused) {

@@ -90,25 +90,57 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
     }
     
     public boolean onTouch(View v, MotionEvent event) {
-    	
+		float x = event.getX();
+		float y = event.getY();
+		
     	int randomIndex = generator.nextInt( fortuneCookie.length );
     	
-		if(event.getAction() == MotionEvent.ACTION_DOWN)
+		/*if(event.getAction() == MotionEvent.ACTION_DOWN)
 		{
 			mp.start();
 			Toast.makeText(getApplicationContext(), fortuneCookie[randomIndex], Toast.LENGTH_LONG).show();
 			
 			mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));
+		}*/
+		
+		switch (event.getAction()) {
+		case MotionEvent.ACTION_DOWN:			// one touch: drag
+			Log.d("ShaderActivity", "mode=DRAG" );
+			mode = DRAG;
+			mp.start();
+			mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));
+			Toast.makeText(getApplicationContext(), fortuneCookie[randomIndex], Toast.LENGTH_LONG).show();
+			break;
+		case MotionEvent.ACTION_UP:		// no mode
+			mode = NONE;
+			Log.d("ShaderActivity", "mode=NONE" );
+			oldDist = 100.0f;
+			break;
+		case MotionEvent.ACTION_POINTER_UP:		// no mode
+			mode = NONE;
+			Log.d("ShaderActivity", "mode=NONE" );
+			oldDist = 100.0f;
+			break;
+		case MotionEvent.ACTION_MOVE:						// rotation
+			if (mode == DRAG){
+				Log.d("ShaderActivity", "Action move??" );
+				mRenderer.manualRotation(mPreviousX, x, mPreviousY, y);
+			}
+			break;
 		}
+		mPreviousX = x;
+		mPreviousY = y;
+		
+		
 		return super.onTouchEvent(event);
 	}
     
-    /************
-	 * TOUCH FUNCTION - Should allow user to rotate the environment
-	 **********/
+
 	/*@Override public boolean onTouchEvent(MotionEvent e) {
 		float x = e.getX();
 		float y = e.getY();
+	
+		
 		switch (e.getAction()) {
 		case MotionEvent.ACTION_DOWN:			// one touch: drag
 			Log.d("ShaderActivity", "mode=DRAG" );
@@ -126,11 +158,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 			break;
 		case MotionEvent.ACTION_MOVE:						// rotation
 			if (mode == DRAG){
-				float dx = x - mPreviousX;
-				float dy = y - mPreviousY;
-				//mRenderer.mAngleX += dx * TOUCH_SCALE_FACTOR;
-				//mRenderer.mAngleY += dy * TOUCH_SCALE_FACTOR;
-				mGLSurfaceView.requestRender();
+				mRenderer.manualRotation(mPreviousX, x, mPreviousY, y);
 			}
 			break;
 		}
@@ -140,12 +168,13 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	}*/
     
     public void onClick(View v) {
-    	Toast.makeText(getApplicationContext(), "button", Toast.LENGTH_LONG).show();
+    	//Toast.makeText(getApplicationContext(), "button", Toast.LENGTH_LONG).show();
     	if(this.btnChange.getText().toString().equalsIgnoreCase("Manualy")){
-    		this.btnChange.setText("Automatic");	
+    		this.btnChange.setText("Automatic");
+    		mRenderer.stopRotation();
     	}else{
     		this.btnChange.setText("Manualy");
-    		
+    		mRenderer.startRotation();		
     	}
 	}
     
@@ -153,34 +182,21 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	 * PROPERTIES
 	 *********************************/
 
-	/*private GLSurfaceView mGLSurfaceView;
-
 	// rotation
-	private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
 	private float mPreviousX;
 	private float mPreviousY;
 
-	// shader constants
-	private final int GOURAUD_SHADER = 0;
-	private final int PHONG_SHADER = 1;
-	private final int NORMALMAP_SHADER = 2;
 
-
-	// object constants
-	private final int OCTAHEDRON = 0;
-	private final int TETRAHEDRON = 1;
-	private final int CUBE = 2;
 
 	// touch events
 	private final int NONE = 0;
 	private final int DRAG = 0;
-	private final int ZOOM = 0;
 
 	// pinch to zoom
 	float oldDist = 100.0f;
 	float newDist;
 
-	int mode = 0;*/
+	int mode = 0;
     
     
     
