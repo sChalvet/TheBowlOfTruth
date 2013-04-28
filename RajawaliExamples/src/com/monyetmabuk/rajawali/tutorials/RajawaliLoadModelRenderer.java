@@ -69,9 +69,10 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		SimpleMaterial planeMat = new SimpleMaterial();
 		Bitmap texture = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.space);
 		planeMat.addTexture(mTextureManager.addTexture(texture));
-		Plane plane = new Plane(4, 4, 1, 1);
+		Plane plane = new Plane(10, 10, 1, 1);
 		plane.setRotZ(-90);
-		plane.setScale(3.7f);
+		plane.setZ(80);
+		plane.setScale(10f);
 		plane.setMaterial(planeMat);
 		addChild(plane);
 		
@@ -109,7 +110,7 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 	public void manualRotation(float xBegin, float xFinish, float yBegin, float yFinish){
 		//manualRotation = new RotateAnimation3D(Axis.X, xBegin, );
 		
-		mObjectGroup.setRotation(((xFinish-xBegin)* TOUCH_SCALE_FACTOR), ((yFinish-yBegin)* TOUCH_SCALE_FACTOR), 0);
+		mObjectGroup.setRotation(((yFinish-yBegin)* TOUCH_SCALE_FACTOR), ((xFinish-xBegin)* TOUCH_SCALE_FACTOR), 0);
 	}
 
 	public void onDrawFrame(GL10 glUnused) {

@@ -24,6 +24,8 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	MediaPlayer mp;
 	private LinearLayout mLinearLayout;
 	Button btnChange;
+	Button btnWave;
+	boolean waves;
 	
 	private String[] fortuneCookie = {	"Confucius says: Go to bed with itchy bum,\nwake up with stinky finger!",
 										"A new pair of shoes will do you a world of good!",
@@ -50,7 +52,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 										"Would'nt it be ironic to die in the living room?",
 										"Borrow money from pessimists, they don't expect it back.",
 										"Boats and water are in your future.",
-										"Your problems just got bigger, think what did you just do.",
+										"Your problems just got bigger, think! What did you just do?",
 										"Are your legs tired? You've been running through someones mind all day.",
 										"Change is inevitable except for vending machines.",
 										"I cannot help you for I am just a bowl.",
@@ -84,6 +86,15 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
         btnChange.setTextSize(10);
         mLinearLayout.addView(btnChange);
         
+        btnWave = new Button(this);
+        btnWave.setId(1);
+        btnWave.setOnClickListener(this);
+        btnWave.setText("Waves On");
+        btnWave.setTextSize(10);
+        mLinearLayout.addView(btnWave);
+        
+        //if this is true then when screen is pocked waves will appear.
+        waves = true;
         mLayout.addView(mLinearLayout);
 		
         initLoader();
@@ -99,7 +110,8 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 			mp.start();
 			Toast.makeText(getApplicationContext(), fortuneCookie[randomIndex], Toast.LENGTH_LONG).show();
 			
-			//mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));  //Waves!
+			if(waves)
+				mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));  //Waves!
 		}
 		return super.onTouchEvent(event);
 	}
@@ -125,12 +137,22 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
     
     public void onClick(View v) {
     	//Toast.makeText(getApplicationContext(), "button", Toast.LENGTH_LONG).show();
-    	if(this.btnChange.getText().toString().equalsIgnoreCase("Manualy")){
-    		this.btnChange.setText("Automatic");
-    		mRenderer.stopRotation();
+    	if(v.getId() == btnChange.getId()){
+	    	if(this.btnChange.getText().toString().equalsIgnoreCase("Manualy")){
+	    		this.btnChange.setText("Automatic");
+	    		mRenderer.stopRotation();
+	    	}else{
+	    		this.btnChange.setText("Manualy");
+	    		mRenderer.startRotation();		
+	    	}
     	}else{
-    		this.btnChange.setText("Manualy");
-    		mRenderer.startRotation();		
+	    	if(this.btnWave.getText().toString().equalsIgnoreCase("Waves On")){
+	    		this.btnWave.setText("Waves Off");
+	    		waves = false;
+	    	}else{
+	    		this.btnWave.setText("Waves On");
+	    		waves = true;		
+	    	}	
     	}
 	}
     
