@@ -13,6 +13,13 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
+/**
+ * 
+ * @author Dennis Ippel
+ * 
+ * Contains code that creates a waiting icon while the object is loaded.
+ *
+ */
 public class RajawaliExampleActivity extends RajawaliActivity {
 	private ImageView mLoaderGraphic;
 

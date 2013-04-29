@@ -17,6 +17,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Dennis Ippel, modified by Jack Fortenbery and Samuel Chalvet.
+ * 
+ *  This Activity contains a button to start/stop the spinning of the bowl.
+ *  There is also a button to start/stop the wave effect on touch.
+ *  It calls RajawaliLoadModelRenderer to lead the bowl and background.
+ *
+ */
 public class RajawaliLoadModelActivity extends RajawaliExampleActivity implements OnTouchListener, OnClickListener{
 	private RajawaliLoadModelRenderer mRenderer;
 	private Point mScreenSize;
@@ -27,6 +36,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	Button btnWave;
 	boolean waves;
 	
+	//contains all of the proverbs
 	private String[] fortuneCookie = {	"Confucius says: Go to bed with itchy bum,\nwake up with stinky finger!",
 										"A new pair of shoes will do you a world of good!",
 										"The end is near...\nAnd it's your fault...",
@@ -66,7 +76,9 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
         mRenderer.setSurfaceView(mSurfaceView);
         super.setRenderer(mRenderer);
         
+        //gong sound is instantiated here
         mp= MediaPlayer.create(this, R.raw.gong);
+        //creates a touch listener
         mSurfaceView.setOnTouchListener(this);
         
 		Display display = getWindowManager().getDefaultDisplay();
@@ -74,6 +86,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 		mScreenSize.x = display.getWidth();
 		mScreenSize.y = display.getHeight();
 		
+		//instantiates a linear layout, used to add the buttons
 		mLinearLayout = new LinearLayout(this);
         mLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
         mLinearLayout.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
@@ -95,31 +108,40 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
         btnWave.setTextSize(10);
         mLinearLayout.addView(btnWave);
         
-        //if this is true then when screen is pocked waves will appear.
+        //if this is true then when screen is poked waves will appear.
         waves = true;
+        
+        //adds the linear layout to the screen layout
         mLayout.addView(mLinearLayout);
 		
+        //warning text, program crashes if users modifies the object before is loads
         Toast.makeText(getApplicationContext(), "Please wait for object to load before clicking buttons.", Toast.LENGTH_LONG).show();
+        
+        //starts the loading process in RajawaliLoadModelRenderer
         initLoader();
     }
     
+    //onTouch event that detects the screen being poked
     public boolean onTouch(View v, MotionEvent event) {
 		
+    	//generates a random number, used for the fortuneCookie array[]
     	int randomIndex = generator.nextInt( fortuneCookie.length );
     	
 		if(event.getAction() == MotionEvent.ACTION_DOWN)
 		{
-			Log.d("ShaderActivity", "mode=DRAG" );
+			//plays the  gong sound
 			mp.start();
+			//displays the bowl of truth proverb
 			Toast.makeText(getApplicationContext(), fortuneCookie[randomIndex], Toast.LENGTH_LONG).show();
 			
+			//if the wave option is true then a wave is created centered on the point where the screen was touched
 			if(waves)
 				mRenderer.setTouch(event.getX() / mScreenSize.x, 1.0f - (event.getY() / mScreenSize.y));  //Waves!
 		}
 		return super.onTouchEvent(event);
 	}
     
-
+    //onTouchEvent used to detect a swiping action, used to rotate the bowl
 	@Override public boolean onTouchEvent(MotionEvent e) {
 		float x = e.getX();
 		float y = e.getY();
@@ -128,8 +150,8 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 		switch (e.getAction()) {
 
 		case MotionEvent.ACTION_MOVE:						// rotation
-			Log.d("ShaderActivity", "Action move2??" );
-			Log.d("ShaderActivity", "xP= "+mPreviousX+" xNow= "+ "+mPreviousX+"+" yP= "+mPreviousY+" Ynow=  "+y);
+			
+			//sends the before and after x and y coord to RajawaliLoadModelRenderer to rotate the bowl
 			mRenderer.manualRotation(mPreviousX, x, mPreviousY, y);
 			break;
 		}
@@ -138,17 +160,19 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 		return true;
 	}
     
+	//on click event for the two buttons
     public void onClick(View v) {
-    	//Toast.makeText(getApplicationContext(), "button", Toast.LENGTH_LONG).show();
+    	
+    	//if btnChange was  touched then toggle it, and execute the corresponding code
     	if(v.getId() == btnChange.getId()){
-	    	if(this.btnChange.getText().toString().equalsIgnoreCase("Manualy")){
+	    	if(this.btnChange.getText().toString().equalsIgnoreCase("Manually")){
 	    		this.btnChange.setText("Automatic");
 	    		mRenderer.stopRotation();
 	    	}else{
-	    		this.btnChange.setText("Manualy");
+	    		this.btnChange.setText("Manually");
 	    		mRenderer.startRotation();		
 	    	}
-    	}else{
+    	}else{ //else btnWave was  touched, toggle it, and execute the corresponding code
 	    	if(this.btnWave.getText().toString().equalsIgnoreCase("Waves On")){
 	    		this.btnWave.setText("Waves Off");
 	    		waves = false;
@@ -166,12 +190,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
 	// rotation
 	private float mPreviousX;
 	private float mPreviousY;
-	
 
-
-	// touch events
-	private final int NONE = 0;
-	private final int DRAG = 0;
 
 	// pinch to zoom
 	float oldDist = 100.0f;

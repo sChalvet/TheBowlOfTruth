@@ -20,6 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.monyetmabuk.rajawali.tutorials.ui.ExamplesAdapter;
 
+/**
+ * 
+ * @author Dennis Ippel, modified by Jack Fortenbery and Samuel Chalvet.
+ * 
+This is the main screen activity which contains one button to load the model Activity
+ *
+ */
 public class RajawaliExamplesActivity extends Activity {
 	Button btnFindBowl;
 
@@ -30,6 +37,7 @@ public class RajawaliExamplesActivity extends Activity {
 		setContentView(R.layout.main);
 		//setListAdapter(new ExamplesAdapter(this, list));
 
+		//sends user to the bowl of truth
 		btnFindBowl = (Button) findViewById(R.id.button1);
 		
 		btnFindBowl.setOnClickListener(new View.OnClickListener() {
