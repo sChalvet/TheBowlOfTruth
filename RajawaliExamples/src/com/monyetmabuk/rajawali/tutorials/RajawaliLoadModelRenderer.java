@@ -10,6 +10,8 @@ import rajawali.animation.Animation3D;
 import rajawali.animation.RotateAnimation3D;
 import rajawali.animation.RotateAroundAnimation3D;
 import rajawali.filters.TouchRippleFilter;
+import rajawali.lights.ALight;
+import rajawali.lights.DirectionalLight;
 import rajawali.lights.PointLight;
 import rajawali.materials.DiffuseMaterial;
 import rajawali.materials.SimpleMaterial;
@@ -27,7 +29,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 public class RajawaliLoadModelRenderer extends RajawaliRenderer{
-	private PointLight mLight;
+	//private PointLight mLight;
+	private DirectionalLight mLight;
 	private BaseObject3D mObjectGroup;
 	private Animation3D mCameraAnim, mLightAnim, manualRotation;
 	private ObjectColorPicker mPicker;
@@ -54,13 +57,18 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		mPostProcessingRenderer.setQuality(PostProcessingQuality.LOW);
 		addPostProcessingFilter(mFilter);
 		
-		mLight = new PointLight();
-		mLight.setPosition(0, 0, -4);
-		mLight.setPower(7);
+		//mLight = new PointLight();
+		//mLight.setPosition(0, 0, -90);
+		//mLight.setPower(400);
+		mLight = new DirectionalLight();
+		mLight.setPower(3);
+		mLight.setPosition(0, 0, -150);
+		mLight.setColor(1, 1, 1);
 		mCamera.setLookAt(0, 0, 0);
-		mCamera.setZ(-30);
+		mCamera.setZ(-100);
+		mCamera.setFarPlane(160f);
 
-		ObjParser objParser = new ObjParser(mContext.getResources(), mTextureManager, R.raw.fire_truck_obj);
+		ObjParser objParser = new ObjParser(mContext.getResources(), mTextureManager, R.raw.bowl_of_truth_obj2);
 		objParser.parse();
 		mObjectGroup = objParser.getParsedObject();
 		mObjectGroup.addLight(mLight);
@@ -69,9 +77,9 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		SimpleMaterial planeMat = new SimpleMaterial();
 		Bitmap texture = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.space);
 		planeMat.addTexture(mTextureManager.addTexture(texture));
-		Plane plane = new Plane(10, 10, 1, 1);
-		plane.setRotZ(-90);
-		plane.setZ(80);
+		Plane plane = new Plane(12, 12, 1, 1);
+		plane.setRotZ(0);
+		plane.setZ(40);
 		plane.setScale(10f);
 		plane.setMaterial(planeMat);
 		addChild(plane);
@@ -94,17 +102,17 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		super.onSurfaceCreated(gl, config);	
 		((RajawaliExampleActivity) mContext).hideLoader();
 		mCameraAnim.start();
-		mLightAnim.start();		
+		//mLightAnim.start();		
 	}
 	
 	public void stopRotation(){
 		mCameraAnim.cancel();
-		mLightAnim.cancel();	
+		//mLightAnim.cancel();	
 	}
 	
 	public void startRotation(){
 		mCameraAnim.start();
-		mLightAnim.start();	
+		//mLightAnim.start();	
 	}
 	
 	public void manualRotation(float xBegin, float xFinish, float yBegin, float yFinish){
