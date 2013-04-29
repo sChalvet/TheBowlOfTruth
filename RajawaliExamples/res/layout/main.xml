@@ -35,4 +35,33 @@
         android:layout_marginBottom="55dp"
         android:src="@drawable/icon" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Brought to you by:\nJack Fortenbery and Samuel Chalvet"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="41dp"
+        android:gravity="center"
+        android:text="Code based on work done by:\nShayan Javed and Dennis Ippel"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:typeface="serif" />
+
 </RelativeLayout>

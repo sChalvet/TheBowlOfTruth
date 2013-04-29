@@ -79,6 +79,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
         mLinearLayout.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL);
         mLinearLayout.setVisibility(LinearLayout.VISIBLE);
         
+        //Toggle button to turn auto rotation on or off
         btnChange = new Button(this);
         btnChange.setId(0);
         btnChange.setOnClickListener(this);
@@ -86,6 +87,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
         btnChange.setTextSize(10);
         mLinearLayout.addView(btnChange);
         
+        //toggle button to turn waves on or off
         btnWave = new Button(this);
         btnWave.setId(1);
         btnWave.setOnClickListener(this);
@@ -97,6 +99,7 @@ public class RajawaliLoadModelActivity extends RajawaliExampleActivity implement
         waves = true;
         mLayout.addView(mLinearLayout);
 		
+        Toast.makeText(getApplicationContext(), "Please wait for object to load before clicking buttons.", Toast.LENGTH_LONG).show();
         initLoader();
     }
     

@@ -27,6 +27,7 @@ import rajawali.util.OnObjectPickedListener;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.Toast;
 
 public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 	//private PointLight mLight;
@@ -45,11 +46,10 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 	public RajawaliLoadModelRenderer(Context context) {
 		super(context);
 		setFrameRate(60);
+		
 	}
 
 	protected void initScene() {
-		//mPicker = new ObjectColorPicker(this);
-		//mPicker.setOnObjectPickedListener(this);
 		
 		mFilter = new TouchRippleFilter();
 		mFilter.setRippleSize(25);
@@ -85,7 +85,7 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		addChild(plane);
 		
 		/* MD2 Animation*/
-
+		
 		mCameraAnim = new RotateAnimation3D(Axis.Y, 360);
 		mCameraAnim.setDuration(8000);
 		mCameraAnim.setRepeatCount(Animation3D.INFINITE);
@@ -115,8 +115,8 @@ public class RajawaliLoadModelRenderer extends RajawaliRenderer{
 		//mLightAnim.start();	
 	}
 	
+	//rotates the object, called from onTouch method
 	public void manualRotation(float xBegin, float xFinish, float yBegin, float yFinish){
-		//manualRotation = new RotateAnimation3D(Axis.X, xBegin, );
 		
 		mObjectGroup.setRotation(((yFinish-yBegin)* TOUCH_SCALE_FACTOR), ((xFinish-xBegin)* TOUCH_SCALE_FACTOR), 0);
 	}
